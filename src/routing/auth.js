@@ -68,12 +68,16 @@ router.post('/register', async (request, response, next) => {
                 } else {
                     let data = await dataFetch(query.INSERT_LOGIN, [email, hash], "insert to login", next);
                     let userData = await dataFetch(query.INSERT_USER, [name, email, data.rows[0].login_id], "insert to user", next)
-                    response.status(200).send(userData)
+                    response.status(200).json({
+                        message: "Successfully registered",
+                        status: true
+                    });
                 }
             })
         } else {
             response.status(409).json({
-                message: "Email already exists"
+                message: "Email already exists",
+                status: false
             })
         }
 
